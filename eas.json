@@ -1,0 +1,18 @@
+{
+    "build": {
+      "crossplatform-m": {
+        "android": {
+          "buildType": "apk"
+        }
+      },
+      "crossplatform-m2": {
+        "android": {
+          "gradleCommand": ":app:assembleRelease"
+        }
+      },
+      "crossplatform-m3": {
+        "developmentClient": true
+      },
+      "production": {}
+    }
+  }
