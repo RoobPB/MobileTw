@@ -11,7 +11,6 @@ const UserForm = ({ route }) => {
 
     const handleSubmit = async () => {
         if (route?.params?.user) {
-          // Redigera befintlig användare
           const userRef = doc(db, 'users', route.params.user.id);
           try {
             await updateDoc(userRef, {
@@ -23,7 +22,6 @@ const UserForm = ({ route }) => {
             console.error('Error updating user: ', e);
           }
         } else {
-          // Skapa ny användare
           try {
             const docRef = await addDoc(collection(db, 'users'), {
               firstName,
@@ -39,12 +37,12 @@ const UserForm = ({ route }) => {
   return (
 
     <ImageBackground
-      source={require('../../../image/background.jpg')} // Update with the correct path
+      source={require('../../../image/Letter.jpg')}
       style={styles.backgroundImage}
-      resizeMode="cover" // or "contain" based on your need
+      resizeMode="cover"
     >
     <View style={styles.container}>
-    <Text style={styles.title}>User Form</Text>
+    <Text style={styles.title}>Create User</Text>
       <TextInput
         style={styles.input}
         placeholder="First Name"

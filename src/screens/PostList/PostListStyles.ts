@@ -4,28 +4,31 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+
   },
   postContainer: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#445DB0',
     padding: 15,
     marginVertical: 8,
     borderRadius: 10,
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
     shadowColor: '#000',
-    shadowOffset: { height: 0, width: 0 },
+    shadowOffset: { height: 2, width: 0 },
   },
   postText: {
     fontSize: 16,
     marginBottom: 5,
+    color: '#FFF',
   },
   authorText: {
     fontSize: 14,
-    color: 'gray',
+    color: '#FFF',
+    fontStyle: 'italic',
   },
   dateText: {
     fontSize: 12,
-    color: 'gray',
+    color: '#FFF',
     marginTop: 5,
   },
 
@@ -38,15 +41,19 @@ export const styles = StyleSheet.create({
   backRightBtn: {
     alignItems: 'center',
     justifyContent: 'center',
-    width: 100, // Ökad bredd
-    height: '75%', // Gör knappen lika hög som posten
-    backgroundColor: 'red',
+    width: 100,
+    height: '75%',
+    backgroundColor: '#7F0000',
     right: 0,
-    borderRadius: 10, // Rundade hörn
+    borderRadius: 10,
   },
   backTextWhite: {
     color: '#FFF',
-    fontWeight: 'bold', // Fetstilt typsnitt
-    fontSize: 18, // Större textstorlek
+    fontWeight: 'bold',
+    fontSize: 18,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
   },
 });

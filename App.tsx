@@ -1,68 +1,59 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { Provider, useSelector } from 'react-redux';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Button } from '@rneui/base';
+import { Provider,} from 'react-redux';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { store } from './src/store/store';
-import { selectLoggedInAs } from './src/store/slices/authSlice';
 import UserForm from './src/screens/UserForm/UserForm';
 import UserList from './src/screens/UserList/UserList';
 import LoginScreen from './src/screens/LoginScreen/LoginScreen';
 import PostForm from './src/screens/PostForm/PostForm';
 import PostList from './src/screens/PostList/PostList';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
-
-function HomeScreen({ navigation }) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      </View>
-    );
-}
-
-  function DetailsScreen() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
-      </View>
-    );
-  }
-
-  // const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
 
-  /*const NavigationWrapper = () => {
-    const loggedInAs = useSelector((state: any) => state.auth.loggedInAs)
-  }*/
 
+  export default function App() {
+    return (
+      <Provider store={store}>
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
 
-export default function App() {
+                switch (route.name) {
+                    case 'Posts':
+                      iconName = focused ? 'ios-list' : 'ios-list-outline';
+                      break;
+                    case 'UserForm':
+                      iconName = focused ? 'person-add' : 'person-add-outline';
+                      break;
+                    case 'UserList':
+                      iconName = focused ? 'people' : 'people-outline';
+                      break;
+                    case 'Login':
+                      iconName = focused ? 'log-in' : 'log-in-outline';
+                      break;
+                    case 'Create Post':
+                      iconName = focused ? 'create' : 'create-outline';
+                      break;
+                  }
 
-  //const loggedInUsername = useSelector(selectLoggedInAs) ... loggedInUsername ||
-
-  return (
-    <Provider store={store}>
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Posts" component={PostList} />
-        <Tab.Screen name="UserForm" component={UserForm} />
-        <Tab.Screen name="UserList" component={UserList} options={{ title: 'User List' }}/>
-        <Tab.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
-        <Tab.Screen name="Create Post" component={PostForm} />
-        
-      </Tab.Navigator>
-    </NavigationContainer>
-    </Provider>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+                return <Ionicons name={iconName} size={size} color={color} />;
+              },
+              tabBarActiveTintColor: 'blue',
+              tabBarInactiveTintColor: 'gray',
+            })}
+          >
+            <Tab.Screen name="Posts" component={PostList} />
+            <Tab.Screen name="UserForm" component={UserForm} />
+            <Tab.Screen name="UserList" component={UserList} options={{ title: 'User List' }} />
+            <Tab.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
+            <Tab.Screen name="Create Post" component={PostForm} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </Provider>
+    );
+  }

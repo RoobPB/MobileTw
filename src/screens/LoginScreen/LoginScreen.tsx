@@ -1,13 +1,13 @@
-// LoginScreen.tsx
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Alert, Text } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { login, logout, selectLoggedInAs } from '../../../src/store/slices/authSlice';
 import { styles } from '../LoginScreen/LoginScreenStyles';
+import { ImageBackground } from 'react-native';
 
 const LoginScreen = ({ route }) => {
   const [inputUsername, setInputUsername] = useState('');
-  const loggedInAs = useSelector(selectLoggedInAs); // Antag att du har en selector i din authSlice.
+  const loggedInAs = useSelector(selectLoggedInAs);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,6 +29,11 @@ const LoginScreen = ({ route }) => {
   };
 
   return (
+    <ImageBackground
+      source={require( '../../../image/train.jpg' )}
+      style={styles.backgroundImage}
+      resizeMode="cover"
+    >
     <View style={styles.container}>
       {loggedInAs ? (
         <>
@@ -39,15 +44,17 @@ const LoginScreen = ({ route }) => {
         <>
           <TextInput
             style={styles.input}
-            placeholder="Användarnamn"
+            placeholder="Username"
             value={inputUsername}
             onChangeText={setInputUsername}
             autoCapitalize="none"
+
           />
-          <Button title="Logga in" onPress={handleLogin} />
+          <Button title="Login" onPress={handleLogin} />
         </>
       )}
     </View>
+    </ImageBackground>
   );
 };
 

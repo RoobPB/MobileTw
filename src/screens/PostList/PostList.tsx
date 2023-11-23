@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import { fetchPosts, deletePost  } from '../../store/api/postsApi'; // Anpassa sökvägen till din postsApi.ts
+import { fetchPosts, deletePost  } from '../../store/api/postsApi';
 import { styles } from './PostListStyles';
 import { useSelector } from 'react-redux';
-import { selectLoggedInAs } from '../../store/slices/authSlice'; // Uppdatera sökvägen efter behov
+import { selectLoggedInAs } from '../../store/slices/authSlice';
 
 
 const PostList = () => {
@@ -12,19 +12,16 @@ const PostList = () => {
     const loggedInUser = useSelector(selectLoggedInAs);
 
     useEffect(() => {
-      // Skapar en prenumeration på Firestore och uppdaterar posts när det sker ändringar
-      const unsubscribe = fetchPosts(setPosts);
+      const unsubscribe = fetchPosts(setPosts, loggedInUser);
       return () => unsubscribe();
-    }, []);
+    }, [loggedInUser]);
 
     const handleDelete = async (postId) => {
         await deletePost(postId);
-        // Uppdatera posts-listan efter radering
         setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
       };
 
       const renderHiddenItem = (data, rowMap) => {
-        // Visa "Delete"-knappen endast om inloggad användare är skaparen av posten
         if (data.item.createdBy === loggedInUser) {
           return (
             <View style={styles.rowBack}>
@@ -42,6 +39,9 @@ const PostList = () => {
       };
 
       return (
+        <ImageBackground
+        source={require('../../../image/background.jpg')}
+        style={styles.backgroundImage}>
         <View style={styles.container}>
           <SwipeListView
             data={posts}
@@ -60,6 +60,7 @@ const PostList = () => {
             previewOpenDelay={3000}
           />
         </View>
+        </ImageBackground>
       );
     };
 
